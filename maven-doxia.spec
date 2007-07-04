@@ -37,7 +37,7 @@
 
 Name:           maven-doxia
 Version:        1.0
-Release:        0.1.a7.3jpp.3%{?dist}
+Release:        %mkrel 0.1.a7.3.3.1
 Epoch:          0
 Summary:        Content generation framework
 License:        Apache Software License
@@ -255,7 +255,7 @@ fi
 %defattr(-,root,root,-)
 %{_javadir}/%{name}
 %{_datadir}/maven2
-%{_mavendepmapfragdir}
+%config(noreplace) %{_mavendepmapfragdir}/*
 
 %if %{gcj_support}
 %dir %attr(-,root,root) %{_libdir}/gcj/%{name}
