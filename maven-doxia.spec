@@ -37,7 +37,7 @@
 
 Name:           maven-doxia
 Version:        1.0
-Release:        %mkrel 0.1.a7.3.3.1
+Release:        %mkrel 0.1.a7.3.3.2
 Epoch:          0
 Summary:        Content generation framework
 License:        Apache Software License
@@ -110,8 +110,6 @@ Requires(postun): jpackage-utils >= 0:1.7.2
 
 %if %{gcj_support}
 BuildRequires:    java-gcj-compat-devel
-Requires(post):   java-gcj-compat
-Requires(postun): java-gcj-compat
 %endif
 
 %description
