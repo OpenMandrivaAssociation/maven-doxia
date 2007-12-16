@@ -37,7 +37,7 @@
 
 Name:           maven-doxia
 Version:        1.0
-Release:        %mkrel 0.1.a7.3.3.2
+Release:        %mkrel 0.1.a7.3.3.3
 Epoch:          0
 Summary:        Content generation framework
 License:        Apache Software License
@@ -66,7 +66,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildArch:      noarch
 %endif
 
-BuildRequires:  jpackage-utils >= 0:1.7.2
+BuildRequires:  java-rpmbuild >= 0:1.7.2
 BuildRequires:  ant, ant-nodeps
 %if %with maven
 BuildRequires:  maven2 >= 0:2.0.4-9
