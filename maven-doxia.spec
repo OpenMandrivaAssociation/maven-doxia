@@ -42,6 +42,7 @@ Epoch:          0
 Summary:        Content generation framework
 License:        Apache Software License
 Group:          Development/Java
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:            http://maven.apache.org/doxia/
 
 # svn export http://svn.apache.org/repos/asf/maven/doxia/tags/doxia-1.0-alpha-7/
