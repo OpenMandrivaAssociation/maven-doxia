@@ -37,7 +37,7 @@
 
 Name:           maven-doxia
 Version:        1.0
-Release:        %mkrel 0.1.a7.3.3.5
+Release:        %mkrel 0.1.a7.3.3.6
 Epoch:          0
 Summary:        Content generation framework
 License:        Apache Software License
