@@ -30,7 +30,7 @@
 
 Name:           maven-doxia
 Version:        1.1.4
-Release:        2
+Release:        4
 Summary:        Content generation framework
 License:        ASL 2.0
 Group:          Development/Java
