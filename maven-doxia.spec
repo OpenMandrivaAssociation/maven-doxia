@@ -164,8 +164,8 @@ mvn-jpp \
 
 %install
 # jars/poms
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -d -m 755 %{buildroot}%{_javadir}/%{name}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
 
 for targetdir in `find -type d -name target`; do
 
@@ -177,14 +177,14 @@ for targetdir in `find -type d -name target`; do
     # Does the module have a jar?
     if [ -f $targetdir/$modulename-%{version}.jar ]; then
         cp -p $targetdir/$modulename-%{version}.jar \
-                $RPM_BUILD_ROOT%{_javadir}/%{name}/$strippedmodulename.jar
+                %{buildroot}%{_javadir}/%{name}/$strippedmodulename.jar
     fi
 
 
     # Skip parent pom
     if [ ! -z $strippedmodulename ]; then
         cp -p $targetdir/../pom.xml \
-                $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-$strippedmodulename.pom
+                %{buildroot}%{_mavenpomdir}/JPP.%{name}-$strippedmodulename.pom
 
         %add_to_maven_depmap org.apache.maven.doxia $modulename %{version} JPP/maven-doxia $strippedmodulename
     fi
@@ -192,15 +192,15 @@ for targetdir in `find -type d -name target`; do
 done
 
 # Install parent pom
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.maven-doxia-doxia.pom
+install -pm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP.maven-doxia-doxia.pom
 %add_to_maven_depmap org.apache.maven.doxia doxia %{version} JPP/maven-doxia doxia
-install -pm 644 doxia-modules/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.maven-doxia-modules.pom
+install -pm 644 doxia-modules/pom.xml %{buildroot}/%{_mavenpomdir}/JPP.maven-doxia-modules.pom
 %add_to_maven_depmap org.apache.maven.doxia doxia-modules %{version} JPP/maven-doxia modules
 install -d -m 0755 %{buildroot}/%{_datadir}/maven2/lib
-ln -s %{_javadir}/maven-doxia/logging-api.jar $RPM_BUILD_ROOT/%{_datadir}/maven2/lib/maven-doxia_logging-api.jar
+ln -s %{_javadir}/maven-doxia/logging-api.jar %{buildroot}/%{_datadir}/maven2/lib/maven-doxia_logging-api.jar
 
 # javadoc (all javadocs are contained in the main module docs dir used below)
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -dm 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
 %post
