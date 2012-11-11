@@ -1,0 +1,87 @@
+From c785fcc01e477576bf97aca73fe33a1e424b6985 Mon Sep 17 00:00:00 2001
+From: Stanislav Ochotnicky <sochotnicky@redhat.com>
+Date: Mon, 9 Jan 2012 10:12:54 +0100
+Subject: [PATCH 3/4] remove clirr
+
+---
+ doxia-maven-plugin/pom.xml |   13 -------------
+ pom.xml                    |   26 +-------------------------
+ 2 files changed, 1 insertions(+), 38 deletions(-)
+
+diff --git a/doxia-maven-plugin/pom.xml b/doxia-maven-plugin/pom.xml
+index 92c6b6e..798b4f6 100644
+--- a/doxia-maven-plugin/pom.xml
++++ b/doxia-maven-plugin/pom.xml
+@@ -155,19 +155,6 @@ under the License.
+         </executions>
+       </plugin>
+       <plugin>
+-        <groupId>org.codehaus.mojo</groupId>
+-        <artifactId>clirr-maven-plugin</artifactId>
+-        <configuration>
+-          <comparisonVersion>1.1</comparisonVersion>
+-          <excludes>
+-            <!-- exclude shaded packages -->
+-            <exclude>org/apache/maven/doxia/logging/**</exclude>
+-            <exclude>org/apache/maven/doxia/sink/**</exclude>
+-            <exclude>org/codehaus/doxia/sink/**</exclude>
+-          </excludes>
+-        </configuration>
+-      </plugin>
+-      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-plugin-plugin</artifactId>
+         <executions>
+diff --git a/pom.xml b/pom.xml
+index fe06199..8a71383 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -297,13 +297,6 @@ under the License.
+           </configuration>
+         </plugin>
+         <plugin>
+-          <groupId>org.codehaus.mojo</groupId>
+-          <artifactId>clirr-maven-plugin</artifactId>
+-          <configuration>
+-            <comparisonVersion>1.1</comparisonVersion>
+-          </configuration>
+-        </plugin>
+-        <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-javadoc-plugin</artifactId>
+           <configuration>
+@@ -342,23 +335,6 @@ under the License.
+           </execution>
+         </executions>
+       </plugin>
+-      <plugin>
+-        <groupId>org.codehaus.mojo</groupId>
+-        <artifactId>clirr-maven-plugin</artifactId>
+-        <executions>
+-          <execution>
+-            <phase>verify</phase>
+-            <goals>
+-              <goal>check</goal>
+-            </goals>
+-            <configuration>
+-              <excludes>
+-                <exclude>org/apache/maven/doxia/document/*</exclude>
+-              </excludes>
+-            </configuration>
+-          </execution>
+-        </executions>
+-      </plugin>
+     </plugins>
+   </build>
+ 
+@@ -508,6 +484,6 @@ under the License.
+           </plugin>
+         </plugins>
+       </build>
+-    </profile>    
++    </profile>
+   </profiles>
+ </project>
+-- 
+1.7.7.4
+
