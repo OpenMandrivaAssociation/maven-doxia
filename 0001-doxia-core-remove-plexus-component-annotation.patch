@@ -1,0 +1,24 @@
+From 5e24b4a0049ea437f8eb9bae0de46977a7387a10 Mon Sep 17 00:00:00 2001
+From: Michal Srb <msrb@redhat.com>
+Date: Mon, 29 Apr 2013 13:16:27 +0200
+Subject: [PATCH] doxia-core remove plexus component annotation
+
+---
+ .../src/main/java/org/apache/maven/doxia/parser/AbstractParser.java      | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/doxia-core/src/main/java/org/apache/maven/doxia/parser/AbstractParser.java b/doxia-core/src/main/java/org/apache/maven/doxia/parser/AbstractParser.java
+index ff6ea29..8d0b314 100644
+--- a/doxia-core/src/main/java/org/apache/maven/doxia/parser/AbstractParser.java
++++ b/doxia-core/src/main/java/org/apache/maven/doxia/parser/AbstractParser.java
+@@ -45,7 +45,6 @@ import org.codehaus.plexus.component.annotations.Requirement;
+  * @version $Id: AbstractParser.java 1345590 2012-06-02 21:36:10Z hboutemy $
+  * @since 1.0
+  */
+-@Component( role = Parser.class )
+ public abstract class AbstractParser
+     implements Parser
+ {
+-- 
+1.8.1.4
+
