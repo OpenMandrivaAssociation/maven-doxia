@@ -1,0 +1,102 @@
+From 1ebea913dce45bdebd5f2fbf765a8091f7a88907 Mon Sep 17 00:00:00 2001
+From: Mikolaj Izdebski <mizdebsk@redhat.com>
+Date: Wed, 6 Nov 2013 12:46:26 +0100
+Subject: [PATCH 2/4] Update to Plexus Container 1.5.5
+
+---
+ .../java/org/apache/maven/doxia/module/AbstractIdentityTest.java   | 3 ++-
+ .../test/java/org/apache/maven/doxia/sink/AbstractSinkTest.java    | 3 ++-
+ .../test/java/org/apache/maven/doxia/xsd/AbstractXmlValidator.java | 3 ++-
+ pom.xml                                                            | 7 +------
+ 4 files changed, 7 insertions(+), 9 deletions(-)
+
+diff --git a/doxia-core/src/test/java/org/apache/maven/doxia/module/AbstractIdentityTest.java b/doxia-core/src/test/java/org/apache/maven/doxia/module/AbstractIdentityTest.java
+index 100add3..8c78956 100644
+--- a/doxia-core/src/test/java/org/apache/maven/doxia/module/AbstractIdentityTest.java
++++ b/doxia-core/src/test/java/org/apache/maven/doxia/module/AbstractIdentityTest.java
+@@ -33,6 +33,7 @@ import org.apache.maven.doxia.parser.Parser;
+ import org.apache.maven.doxia.sink.Sink;
+ import org.apache.maven.doxia.sink.SinkTestDocument;
+ import org.apache.maven.doxia.sink.TextSink;
++import org.codehaus.plexus.DefaultPlexusContainer;
+ import org.codehaus.plexus.util.IOUtil;
+ 
+ /**
+@@ -107,7 +108,7 @@ public abstract class AbstractIdentityTest
+         writer = new StringWriter();
+         sink = new TextSink( writer );
+         Parser parser = createParser();
+-        parser.enableLogging( new PlexusLoggerWrapper( getContainer().getLogger() ) );
++        parser.enableLogging( new PlexusLoggerWrapper( ( ( DefaultPlexusContainer )getContainer() ).getLogger() ) );
+         parser.parse( reader, sink );
+         String actual = writer.toString();
+ 
+diff --git a/doxia-core/src/test/java/org/apache/maven/doxia/sink/AbstractSinkTest.java b/doxia-core/src/test/java/org/apache/maven/doxia/sink/AbstractSinkTest.java
+index 93d0f01..5e817d6 100644
+--- a/doxia-core/src/test/java/org/apache/maven/doxia/sink/AbstractSinkTest.java
++++ b/doxia-core/src/test/java/org/apache/maven/doxia/sink/AbstractSinkTest.java
+@@ -25,6 +25,7 @@ import java.io.Writer;
+ 
+ import org.apache.maven.doxia.AbstractModuleTest;
+ import org.apache.maven.doxia.logging.PlexusLoggerWrapper;
++import org.codehaus.plexus.DefaultPlexusContainer;
+ import org.codehaus.plexus.util.IOUtil;
+ import org.custommonkey.xmlunit.Diff;
+ import org.custommonkey.xmlunit.XMLUnit;
+@@ -56,7 +57,7 @@ public abstract class AbstractSinkTest
+ 
+         testWriter.reset();
+         sink = createSink( testWriter );
+-        sink.enableLogging( new PlexusLoggerWrapper( getContainer().getLogger() ) );
++        sink.enableLogging( new PlexusLoggerWrapper( ( ( DefaultPlexusContainer )getContainer() ).getLogger() ) );
+     }
+ 
+     /**
+diff --git a/doxia-core/src/test/java/org/apache/maven/doxia/xsd/AbstractXmlValidator.java b/doxia-core/src/test/java/org/apache/maven/doxia/xsd/AbstractXmlValidator.java
+index 5f9108e..88db2b4 100644
+--- a/doxia-core/src/test/java/org/apache/maven/doxia/xsd/AbstractXmlValidator.java
++++ b/doxia-core/src/test/java/org/apache/maven/doxia/xsd/AbstractXmlValidator.java
+@@ -31,6 +31,7 @@ import junit.framework.AssertionFailedError;
+ 
+ import org.apache.maven.doxia.parser.Parser;
+ 
++import org.codehaus.plexus.DefaultPlexusContainer;
+ import org.codehaus.plexus.PlexusTestCase;
+ import org.codehaus.plexus.logging.Logger;
+ 
+@@ -96,7 +97,7 @@ public abstract class AbstractXmlValidator
+     public void testValidateFiles()
+         throws Exception
+     {
+-        final Logger logger = getContainer().getLoggerManager().getLoggerForComponent( Parser.ROLE );
++        final Logger logger = ( ( DefaultPlexusContainer )getContainer() ).getLoggerManager().getLoggerForComponent( Parser.ROLE );
+ 
+         for ( Iterator<Map.Entry<String, String>> it = getTestDocuments().entrySet().iterator(); it.hasNext(); )
+         {
+diff --git a/pom.xml b/pom.xml
+index 4d42f3e..a0dbb9c 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -287,18 +287,13 @@ under the License.
+       <dependency>
+         <groupId>org.codehaus.plexus</groupId>
+         <artifactId>plexus-container-default</artifactId>
+-        <version>1.0-alpha-30</version>
++        <version>1.5.5</version>
+       </dependency>
+       <dependency>
+         <groupId>org.codehaus.plexus</groupId>
+         <artifactId>plexus-utils</artifactId>
+         <version>3.0.15</version>
+       </dependency>
+-      <dependency><!-- remove when upgrading parent to version 22 -->
+-        <groupId>org.codehaus.plexus</groupId>
+-        <artifactId>plexus-component-annotations</artifactId>
+-        <version>1.5.5</version>
+-      </dependency>
+     </dependencies>
+   </dependencyManagement>
+   <dependencies>
+-- 
+1.9.3
+

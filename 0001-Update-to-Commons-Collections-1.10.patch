@@ -1,0 +1,32 @@
+From 786df11d7033f89fd2256e2c45900bd822c36abc Mon Sep 17 00:00:00 2001
+From: Mikolaj Izdebski <mizdebsk@redhat.com>
+Date: Thu, 7 Nov 2013 08:24:01 +0100
+Subject: [PATCH 3/4] Update to Commons Collections 1.10
+
+---
+ doxia-modules/doxia-module-fo/pom.xml | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/doxia-modules/doxia-module-fo/pom.xml b/doxia-modules/doxia-module-fo/pom.xml
+index 6d54eba..0d89e4f 100644
+--- a/doxia-modules/doxia-module-fo/pom.xml
++++ b/doxia-modules/doxia-module-fo/pom.xml
+@@ -73,7 +73,14 @@ under the License.
+     <dependency>
+       <groupId>commons-configuration</groupId>
+       <artifactId>commons-configuration</artifactId>
+-      <version>1.6</version>
++      <version>1.10</version>
++    </dependency>
++    <dependency>
++      <groupId>commons-collections</groupId>
++      <artifactId>commons-collections</artifactId>
++      <version>3.2.1</version>
++      <!-- runtime dep for commons-configuration -->
++      <scope>runtime</scope>
+     </dependency>
+     <dependency>
+       <groupId>org.apache.xmlgraphics</groupId>
+-- 
+1.9.3
+

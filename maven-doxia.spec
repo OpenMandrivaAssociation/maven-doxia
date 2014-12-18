@@ -1,110 +1,72 @@
 %{?_javapackages_macros:%_javapackages_macros}
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%if 0%{?fedora}
 %bcond_without itext
-%endif
 %bcond_without markdown
 
 Name:           maven-doxia
-Version:        1.4
-Release:        2.1%{?dist}
+Version:        1.6
+Release:        1.1
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
-
+Group:          Development/Java
 URL:            http://maven.apache.org/doxia/
 
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/doxia/doxia/%{version}/doxia-%{version}-source-release.zip
 
+# Class used only by dependent packages that was moved to doxia-sitetools in
+# previous release. But doxia-sitetools doesn't have 1.5 release so putting it
+# back otherwise it would break all doxia dependent packages.
+# Please remove it as soon as new doxia-sitetools containing this class is
+# released
+#Source1:        RenderingContext.java
 
-# TODO: push upstream
-# abstract class should not be annotated as component because maven
-# will pick it up and try to instantiate
-Patch1:         0001-doxia-core-remove-plexus-component-annotation.patch
 
 # Build against iText 2.x
 # http://jira.codehaus.org/browse/DOXIA-53
 Patch2:         0004-Fix-itext-dependency.patch
 
+# Forwarded upstream: DOXIA-504
+Patch3:         0001-Update-to-Plexus-Container-1.5.5.patch
+
+# Forwarded upstream: DOXIA-505
+Patch4:         0001-Update-to-Commons-Collections-1.10.patch
+
+# Don't run bad tests which rely on ordering in set (they fail with Java 8)
+Patch5:         0001-Disable-tests-which-rely-on-ordering-in-set.patch
+
 BuildArch:      noarch
 
-BuildRequires:  java >= 1:1.6.0
-BuildRequires:  jpackage-utils
-BuildRequires:  ant
-BuildRequires:  plexus-cli
 BuildRequires:  maven-local
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-jar-plugin
-BuildRequires:  maven-javadoc-plugin
-BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  maven-site-plugin
-BuildRequires:  maven-shade-plugin
-BuildRequires:  maven-surefire-maven-plugin
-BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  maven-shared-reporting-impl
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  maven-doxia-tools
-BuildRequires:  modello-maven-plugin
-BuildRequires:  classworlds
-BuildRequires:  apache-commons-collections
-BuildRequires:  apache-commons-logging
-BuildRequires:  apache-commons-validator
-BuildRequires:  apache-commons-configuration
-BuildRequires:  junit
-BuildRequires:  jakarta-oro
-BuildRequires:  plexus-i18n
-BuildRequires:  plexus-utils
-BuildRequires:  plexus-velocity
-BuildRequires:  plexus-build-api
-BuildRequires:  velocity
-BuildRequires:  fop
-BuildRequires:  plexus-containers-component-metadata
-BuildRequires:  plexus-containers-component-javadoc
-BuildRequires:  plexus-containers-container-default
-BuildRequires:  httpcomponents-client
-BuildRequires:  httpcomponents-project
-BuildRequires:  xmlgraphics-commons
-BuildRequires:  avalon-framework
-BuildRequires:  geronimo-parent-poms
-BuildRequires:  geronimo-jms
-BuildRequires:  javamail
+BuildRequires:  mvn(commons-configuration:commons-configuration)
+BuildRequires:  mvn(commons-lang:commons-lang)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
+BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-core)
+#BuildRequires:  mvn(org.apache.maven.doxia:doxia-core::tests:)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-logging-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-apt)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-modules:pom:)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-module-xhtml)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia:pom:)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires:  mvn(org.apache.maven.doxia:doxia-test-docs)
+BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
+BuildRequires:  mvn(org.apache.xmlgraphics:fop)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(xerces:xercesImpl)
+BuildRequires:  mvn(xmlunit:xmlunit)
+BuildRequires:	mvn(org.bouncycastle:bcmail-jdk16)
+
 %if %{with itext}
-BuildRequires:  itext
+BuildRequires:  mvn(com.lowagie:itext)
 %endif
 %if %{with markdown}
-BuildRequires:  pegdown
+BuildRequires:  mvn(org.pegdown:pegdown)
 %endif
 
 Obsoletes:      maven-doxia-book < %{epoch}:%{version}-%{release}
@@ -190,7 +152,7 @@ Summary: RTF module for %{name}
 This package provides %{summary}.
 
 %package modules
-Summary: Doxia modules for several markup languages.
+Summary: Doxia modules for several markup languages
 
 %description modules
 This package provides %{summary}.
@@ -219,6 +181,12 @@ Summary: Sink-api module for %{name}
 %description sink-api
 This package provides %{summary}.
 
+%package tests
+Summary: Tests for %{name}
+
+%description tests
+This package provides %{summary}.
+
 %package test-docs
 Summary: Test-docs module for %{name}
 
@@ -227,7 +195,7 @@ This package provides %{summary}.
 
 %package javadoc
 Summary: Javadoc for %{name}
-
+Group:   Documentation
 
 %description javadoc
 API documentation for %{name}.
@@ -235,8 +203,13 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n doxia-%{version}
-%patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+
+#mkdir doxia-core/src/main/java/org/apache/maven/doxia/sink/render
+#cp -p %SOURCE1 doxia-core/src/main/java/org/apache/maven/doxia/sink/render/
 
 # we don't have clirr-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin pom.xml
@@ -246,6 +219,8 @@ API documentation for %{name}.
 "/pom:executions/pom:execution/pom:configuration" \
 "<useJava5>true</useJava5>" doxia-modules/doxia-module-fml/pom.xml
 
+%mvn_package :::tests: tests
+
 %if %{without itext}
 %pom_disable_module doxia-module-itext doxia-modules
 %endif
@@ -254,15 +229,14 @@ API documentation for %{name}.
 %endif
 
 %build
-# tests disabled because some use old plexus-container and don't work
-# with new
-%mvn_build -f -s
+%mvn_build -s
 
 %install
 %mvn_install
 
 
 %files -f .mfiles-doxia
+%dir %{_javadir}/%{name}
 %doc LICENSE NOTICE
 %files core -f .mfiles-doxia-core
 %files logging-api -f .mfiles-doxia-logging-api
@@ -286,12 +260,52 @@ API documentation for %{name}.
 %files module-xhtml -f .mfiles-doxia-module-xhtml
 %files sink-api -f .mfiles-doxia-sink-api
 %files test-docs -f .mfiles-doxia-test-docs
+%files tests -f .mfiles-tests
 %doc LICENSE NOTICE
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE NOTICE
 
 
 %changelog
+* Thu Jul 17 2014 Mikolaj Izdebski <mizdebsk@redhat.com> - 0:1.6-1
+- Update to upstream version 1.6
+
+* Wed Jun 11 2014 Michael Simacek <msimacek@redhat.com> - 0:1.5-7
+- Change BR classworlds to plexus-classworlds
+
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0:1.5-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
+* Mon May 12 2014 Mikolaj Izdebski <mizdebsk@redhat.com> - 0:1.5-5
+- Build-require pegdown >= 1.4.2-2
+
+* Wed Mar 26 2014 Michal Srb <msrb@redhat.com> - 0:1.5-4
+- Disable bad tests which rely on ordering in set
+
+* Tue Mar 04 2014 Stanislav Ochotnicky <sochotnicky@redhat.com> - 0:1.5-3
+- Use Requires: java-headless rebuild (#1067528)
+
+* Wed Feb 19 2014 Mikolaj Izdebski <mizdebsk@redhat.com> - 0:1.5-2
+- Fix unowned directory
+
+* Tue Dec 10 2013 Michael Simacek <msimacek@redhat.com> - 0:1.5-1
+- Update to upstream version 1.5
+- Move back RenderingContext.java that was moved to doxia-sitetools which
+  doesn't have a release yet
+
+* Thu Dec  5 2013 Mikolaj Izdebski <mizdebsk@redhat.com> - 0:1.4-6
+- BuildRequire plexus-containers-container-default 1.5.5-14
+- Resolves: rhbz#1036584
+
+* Mon Nov 25 2013 Stanislav Ochotnicky <sochotnicky@redhat.com> - 0:1.4-5
+- Rebuild after itext versioned jar fixed
+
+* Thu Nov  7 2013 Mikolaj Izdebski <mizdebsk@redhat.com> - 0:1.4-4
+- Port to Commons Collections 1.10
+
+* Wed Nov  6 2013 Mikolaj Izdebski <mizdebsk@redhat.com> - 0:1.4-3
+- Enable tests
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0:1.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
