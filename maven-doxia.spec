@@ -4,7 +4,7 @@
 
 Name:           maven-doxia
 Version:        1.6
-Release:        1.1
+Release:        1.2
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -18,7 +18,7 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/doxia/doxia/%{ver
 # back otherwise it would break all doxia dependent packages.
 # Please remove it as soon as new doxia-sitetools containing this class is
 # released
-#Source1:        RenderingContext.java
+Source1:        RenderingContext.java
 
 
 # Build against iText 2.x
@@ -208,8 +208,8 @@ API documentation for %{name}.
 %patch4 -p1
 %patch5 -p1
 
-#mkdir doxia-core/src/main/java/org/apache/maven/doxia/sink/render
-#cp -p %SOURCE1 doxia-core/src/main/java/org/apache/maven/doxia/sink/render/
+mkdir doxia-core/src/main/java/org/apache/maven/doxia/sink/render
+cp -p %SOURCE1 doxia-core/src/main/java/org/apache/maven/doxia/sink/render/
 
 # we don't have clirr-maven-plugin
 %pom_remove_plugin org.codehaus.mojo:clirr-maven-plugin pom.xml
