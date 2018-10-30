@@ -4,7 +4,7 @@
 
 Name:           maven-doxia
 Version:        1.6
-Release:        1.4
+Release:        1.5
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
