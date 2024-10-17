@@ -9,7 +9,7 @@ Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
 Group:          Development/Java
-URL:            http://maven.apache.org/doxia/
+URL:            https://maven.apache.org/doxia/
 
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/doxia/doxia/%{version}/doxia-%{version}-source-release.zip
 
